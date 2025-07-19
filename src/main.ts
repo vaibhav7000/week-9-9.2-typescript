@@ -85,7 +85,63 @@ function runAfter2S(callback: () => void): void {
 */
 
 
-// "interfaces" are used to define "types" for variables that has "multiple-properties" (objects)
+// "interfaces" are used to define "types" for variables that has "multiple-properties" (objects) + it follows DRY. "interfaces" allow to combine "multiple type"s into a "single type"
 interface User {
+    firstName: string,
+    lastName: string,
+    email: string,
+    age: number
+}
 
+// using "interface" for declaring types for the objects
+const user: User = {
+    firstName: "vaibhav",
+    lastName: "chawla",
+    email: "random@gmail.com",
+    age: 23
+}
+
+function isLegal(payload: User): boolean {
+    return payload["age"] > 18
+}
+
+// we do similar to the same interface but violates DRY
+function greetUser(user: {
+    firstName: string,
+    lastName: string,
+    age: number,
+    email: string
+}): void {
+    console.log(user["firstName"] + user["lastName"]);
+}
+
+// optional with types (?) using this we can either pass the value or not, but if passed it should follow the type mention in the type declaration
+
+interface Car {
+    price: number,
+    model: number,
+    fullName: string,
+    yom?: number // declaring an optional type, 
+}
+
+function carInfo(vehicle: Car): void {
+    console.log("Car is " + vehicle["fullName"] + " price is " + vehicle["price"] + " model is " + vehicle["model"] + " year of manufacturer is " + `${vehicle["yom"] ? vehicle["yom"] : "we do not"}`);
+}
+
+carInfo({
+    price: 100,
+    model: 2002,
+    fullName: "Car",
+    yom: 2001
+})
+
+
+interface Bike {
+    model: string,
+    brand: string,
+    price: number
+}
+
+function bikeInfo({model, brand, price}: Bike): string {
+    return `Bike brand is ${brand} model is ${model} and price is ${price}`;
 }
